@@ -1,0 +1,11 @@
+
+The arduino library should be compiled into an archive library .a and integrated during Contiki OS compilation.
+
+1) Compile the arduino program by a traditionnal way
+2) Get ALL object files, including ones of the libraries execpted the main.cpp.o because we will use one of Contiki
+3) If some implemented functions in Arduino should be in Contiki, their prototype should be declared in extern "C" {} section of Arduino.h
+4) Build the archive avr-ar -cvq dvs_arduino.a *.o
+5) Move the archive libs folder to be included in Contiki compilation process thanks to Makefile.dvs 
+
+!! Trouble, some conflicts can occur about timers and other hardware component between Contiki and Arduino.
+

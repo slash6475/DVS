@@ -1,0 +1,6 @@
+dvs_src = dvs_driver.c shell_dvs.c
+
+# Add the library to Contiki linker
+PROJECT_LIBRARIES=../../apps/dvs/libs/dvs_arduino.a
+
+#PROJECT_LIBRARIES=../../apps/dvs/libs/Adafruit_NeoPixel-good.a
