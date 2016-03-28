@@ -1,0 +1,26 @@
+[Eagle]
+Version="07 04 00"
+Platform="Windows"
+Serial="62191E841E-LSR-WLM-1EL"
+Globals="Globals"
+Desktop="Desktop"
+
+[Globals]
+AutoSaveProject=1
+UsedLibrary="C:/EAGLE-7.4.0/lbr/19inch.lbr"
+UsedLibrary="C:/EAGLE-7.4.0/lbr/con-commcon.lbr"
+UsedLibrary="C:/EAGLE-7.4.0/lbr/con-lsta.lbr"
+UsedLibrary="C:/EAGLE-7.4.0/lbr/pinhead.lbr"
+UsedLibrary="Z:/home/slash6475/eagle/dvs/MPU6050.lbr"
+UsedLibrary="Z:/home/slash6475/eagle/dvs/WS2812.lbr"
+UsedLibrary="MPU6050.lbr"
+
+[Win_1]
+Type="Control Panel"
+Loc="61 29 1915 1056"
+State=2
+Number=0
+
+[Desktop]
+Screen="1920 1080"
+Window="Win_1"

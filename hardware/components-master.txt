@@ -1,0 +1,52 @@
+Partlist
+
+Exported from BatonDuDiable.brd at 02/02/2016 17:00:12
+
+EAGLE Version 7.4.0 Copyright (c) 1988-2015 CadSoft
+
+Assembly variant: 
+
+Part      Value          Package           Library     Position (inch)       Orientation
+
+A                        FE05-2W           con-lsta    (0.4 1.35)            R270
+B                        FE05-2W           con-lsta    (2.75 1.35)           R90
+B1        BALUN0805      BALUN             SparkFun    (2.45 1.5)            MR0
+C1        1uF            C0603             rcl         (0.7 1.15)            R0
+C2        0.1uF          0603-CAP          SparkFun    (0.7 1.25)            R0
+C3        0.1uF          0603-CAP          SparkFun    (1.252 1.294)         MR90
+C4        0.1uF          0603-CAP          SparkFun    (0.65 1.35)           R0
+C5        10uF           0603-CAP          SparkFun    (1.95 1.25)           R270
+C6        10 nF          0603-CAP          SparkFun    (1.672 1.575)         MR180
+C7        1uF            0805              SparkFun    (1.25 1.5)            MR270
+C8        1uF            0805              SparkFun    (1.15 1.5)            MR270
+C9        12pF           0603-CAP          SparkFun    (0.9 1.2)             MR180
+C10       12pF           0603-CAP          SparkFun    (1.1 1.2)             MR0
+C11       12pF           0603-CAP          SparkFun    (1.9 1.2)             MR0
+C12       12pF           0603-CAP          SparkFun    (1.9 1.3)             MR0
+C13       22pF           0603-CAP          SparkFun    (2.3 1.5)             MR0
+C14       22pF           0603-CAP          SparkFun    (2.45 1.35)           MR0
+C15       0.47pF         0603-CAP          SparkFun    (2.45 1.2)            MR90
+C16       4.7uF          0603-CAP          SparkFun    (0.85 1.5)            R90
+C17       1uF            0805              SparkFun    (1.85 1.25)           R90
+C18       0.1uF          0603-CAP          SparkFun    (0.8 1.35)            R0
+C19       47 pF          0603-CAP          SparkFun    (0.7 1.25)            MR180
+C20       47 pF          0603-CAP          SparkFun    (0.7 1.15)            MR180
+IC1       FT230XQ        QFN16             ftdichip    (1 1.45)              R0
+LED2                     CHIPLED_0603      led         (2.45 1.4)            R0
+MICRO-USB USB-CONNECTOR  MICRO-USB-435-645 myrobotics2 (1 1.25)              R0
+QUARTZ1   753-7203       753-7203          myrobotics2 (1 1.45)              MR90
+QUARTZ2   QUARTZ32768    QUARTZ32768       myrobotics2 (1.9 1.4)             MR270
+R1        10k            0603-RES          SparkFun    (2.05 1.5)            R180
+R2        5.1K           0603-RES          SparkFun    (2.05 1.5)            MR270
+R3        1.1k           R0603             rcl         (2.45 1.25)           R90
+R4        5.1K           0603-RES          SparkFun    (2.15 1.5)            MR270
+R50       10k            R0603             rcl         (1.85 1.45)           R90
+R51       10             R0603             rcl         (0.8 1.35)            MR0
+R53       10             R0603             rcl         (0.65 1.35)           MR0
+SCL                      1X01              pinhead     (1.489 1.112)         R0
+SDA                      1X01              pinhead     (1.589 1.112)         R0
+SPI                      2X03              pinhead     (2.201 1.223)         R90
+U$1       MPU-6050       QFN.24.4X4        MPU6050     (1.55 1.35)           MR0
+U$7       MIC5366-2.8YMT SOT23-5           SparkFun    (0.7 1.5)             MR0
+U1        ATMEGA128RFA1  QFN-64            SparkFun    (1.55 1.35)           R0
+Y1        ANTENNA2SMD5   ANTENNA-CHIP5     SparkFun    (2.201 1.16)          MR0

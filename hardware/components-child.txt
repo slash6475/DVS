@@ -1,0 +1,22 @@
+Partlist
+
+Exported from BatonDuDiable-leds.sch at 02/02/2016 17:00:40
+
+EAGLE Version 7.4.0 Copyright (c) 1988-2015 CadSoft
+
+Assembly variant: 
+
+Part     Value          Device         Package         Library                    Sheet
+
+BAT1                    BATTERYAAA-KIT BATTERY-AAA-KIT SparkFun-Electromechanical 1
+BAT2                    BATTERYAAA-KIT BATTERY-AAA-KIT SparkFun-Electromechanical 1
+LED1     WS2812B        WS2812B        WS2812B         WS2812                     1
+LED2     WS2812B        WS2812B        WS2812B         WS2812                     1
+LED3     WS2812B        WS2812B        WS2812B         WS2812                     1
+LED4     WS2812B        WS2812B        WS2812B         WS2812                     1
+LED5     WS2812B        WS2812B        WS2812B         WS2812                     1
+LED6     WS2812B        WS2812B        WS2812B         WS2812                     1
+LED7     WS2812B        WS2812B        WS2812B         WS2812                     1
+LED8     WS2812B        WS2812B        WS2812B         WS2812                     1
+SV1                     FE05-2W        FE05-2W         con-lsta                   1
+SV2                     FE05-1         FE05-1          con-lsta                   1
