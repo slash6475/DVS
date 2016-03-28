@@ -44,12 +44,13 @@ SHELL_COMMAND(mpu6050_command,
 PROCESS_THREAD(shell_mpu6050_process, ev, data)
 {
   const char *nextptr;
+	const char show[] = "show";
 
   PROCESS_BEGIN();
   nextptr = data;
 
   if (!strncmp(nextptr, "start", 5))
-  	process_start(&dvs_mpu6050, NULL);
+  	process_start(&dvs_mpu6050, show);
 
   else if (!strncmp(nextptr, "stop", 4))
 		process_exit (&dvs_mpu6050);

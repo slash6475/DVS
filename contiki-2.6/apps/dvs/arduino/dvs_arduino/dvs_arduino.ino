@@ -23,7 +23,7 @@
   #define OUTPUT_READABLE_YAWPITCHROLL
   // MPU control/status vars
   uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
-  uint8_t devStatus;      // return status after each device operation (0 = success, !0 = error)
+  uint8_t devStatus = -1;      // return status after each device operation (0 = success, !0 = error)
   uint16_t packetSize;    // expected DMP packet size (default is 42 bytes)
   uint16_t fifoCount;     // count of all bytes currently in FIFO
   uint8_t fifoBuffer[64]; // FIFO storage buffer
@@ -36,6 +36,7 @@
   VectorFloat gravity;    // [x, y, z]            gravity vector
   float euler[3];         // [psi, theta, phi]    Euler angle container
   float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
+  float acc[3];           // [x, y, z]   yaw/pitch/roll container and gravity vector
   
   boolean mpuInterrupt = false;
   // packet structure for InvenSense teapot demo
@@ -59,6 +60,8 @@ void setup() {
   TWBR = 24; 
   mpu.initialize();
   printf("%s\n",mpu.testConnection() ? "[MPU6050] connection successful" : "[MPU6050] connection failed");
+  
+  if (!mpu.testConnection()) return;
   
   devStatus = mpu.dmpInitialize();
   printf("[MPU6050] MPU Status: %d\n", devStatus);
@@ -91,7 +94,7 @@ void setPixel(int id, char r, char g, char b){
 
 
 char mpu6050(){
-    if (devStatus) return -1;
+    if (devStatus != 0) return -1;
     if (!mpuInterrupt && fifoCount < packetSize) return 0;
 
     mpuInterrupt = false;
@@ -111,6 +114,14 @@ char mpu6050(){
       mpu.dmpGetGravity(&gravity, &q);
       mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
       mpu.dmpGetEuler(euler, &q);
+      
+      
+      mpu.dmpGetAccel(&aa, fifoBuffer);
+      mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
+      acc[0] = aaReal.x;
+      acc[1] = aaReal.y;
+      acc[2] = aaReal.z;
+      
       return 1;
     }
     

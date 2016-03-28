@@ -87,9 +87,9 @@ leds_handler(REQUEST* request, RESPONSE* response)
 
 /*---------------------------------------------------------------------------*/
 /* */
-char current_prog, selected_prog;
-int fd = -1;
-int speed = 1000;
+extern char current_prog, selected_prog;
+extern int fd;
+extern int speed;
 /*---------------------------------------------------------------------------*/
 
 void process_sequence(char* sequence) {
@@ -159,94 +159,31 @@ PROCESS_THREAD(dvs_player, ev, data)
     PROCESS_END();
 }
 
-/*---------------------------------------------------------------------------*/
-/* Button management:
-1 released click: play next program
-5 seconds of pressure: formatting eeprom memory
-*/
-/*---------------------------------------------------------------------------*/
-char btn_state = 0;
-PROCESS(dvs_format, "DVS cfs format process");
-PROCESS_THREAD(dvs_format, ev, data)
-{
-  static struct etimer periodic_timer;
 
-  PROCESS_BEGIN();
-  etimer_set(&periodic_timer, CLOCK_SECOND*5);
-  PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
-
-  if (btn_state == 1){
-    printf("Formatting\n");
-    cfs_coffee_format();
-  }
-  PROCESS_END();
-}
-
-extern char mpuInterrupt;
-ISR (PCINT0_vect)
-{
-   // MPU 6050 Interruption
-   if (PIND & (1<<PD5))
-    mpuInterrupt = 1;
-
-    // External button
-    else {
-     // Start process to count long pression
-     if (btn_state == 0)
-      process_start(&dvs_format, NULL);
-
-     if(++btn_state % 2) return;
-     btn_state = 0;
-
-     if(!(++selected_prog % MAX_PROGRAMS)) selected_prog = 0;
-     printf("DVS plays program %d\n", selected_prog);
-     speed = 1000;
-    }
-}
-
-
-
-/*---------------------------------------------------------------------------*/
-void dvs_init(){
-  // Format the File System if first boot
-//  int fa = cfs_open("/init", CFS_WRITE);
-//  cfs_write(fa, "init\0", 6);
-//  cfs_close(fa);
-
-  neopixel_init();
-  current_prog = selected_prog = 0;
-
-  // Configuration of button interruption on PB4
-  DDRB &= ~(1 << DDB4);
-  PORTB |= (1 << PORTD4);
-  PCICR |= (1 << PCIE0);
-  PCMSK0 |= (1 << PCINT4);
-  sei();
-}
 
 PROCESS_THREAD(dvs_process, ev, data)
 {
-
-  DDRD  |= 1 << PIN4;
-  PORTD |= ~(1 << PIN4);
-
   PROCESS_BEGIN();
-  printf("F_CPU: %lu\n", F_CPU);
-  setup();
+
+  dvs_init();
 
   serial_line_init();
   serial_shell_init();
   shell_ps_init();
   shell_dvs_init();
 
+  printf("F_CPU: %lu\n", F_CPU);
+
+  setup();
+
+
   rest_init();
   printf("Webservices started on %d\n", HTTP_PORT);
   rest_activate_resource(&resource_leds);
 
-  dvs_init();
 
   process_start(&neopixel_test_process, NULL);
-  process_start(&dvs_player, NULL);
+
 
   PROCESS_END();
 }
