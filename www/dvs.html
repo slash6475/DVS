@@ -1,0 +1,229 @@
+<html>
+<head>
+  <title>DVS Web Controller</title>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script type="text/javascript" src="lib/jquery.cookie.js"></script>
+  <script type="text/javascript" src="lib/jscolor.js"></script>
+  <script language="javascript">
+
+	function getSequences (){
+		var sequence = '';
+		for (var i=0; i < pickers.length; i++){
+			if(i % 17 == 0)	
+				sequence += ("00000" + document.getElementById(pickers[i]).value.toString()).slice(-6);
+			else 	{
+				r = Math.round(pickers[i].rgb[0]).toString(16);
+				g = Math.round(pickers[i].rgb[1]).toString(16);
+				b = Math.round(pickers[i].rgb[2]).toString(16);
+				sequence += ("0" + r).slice(-2)+("0" + g).slice(-2)+("0" + b).slice(-2);	
+				}
+			}
+		return sequence;
+		}
+
+	function getSequence (num){
+		var sequence = '';
+		if (num > (pickers.length/16)-1 ) return null;
+		for (var i=num*17; i < (num+1)* 17; i++){
+			if(i % 17 == 0)	
+				sequence += ("00000" + document.getElementById(pickers[i]).value.toString()).slice(-6);
+			else 	{
+				r = Math.round(pickers[i].rgb[0]).toString(16);
+				g = Math.round(pickers[i].rgb[1]).toString(16);
+				b = Math.round(pickers[i].rgb[2]).toString(16);
+				sequence += ("0" + r).slice(-2)+("0" + g).slice(-2)+("0" + b).slice(-2);	
+				}
+			}		
+	return sequence;
+	}
+
+	function format(){
+		$.post("http://[aaaa::ff:fe00:1]/leds",
+		"del:"+program, 
+		function(data) {
+			console.log('deletion done: ' + program + '\n');
+		});
+	}
+
+	// Change order of leds:
+	// add:P:SSSSSSLED000LED111LED222LED333LED444LED555 speedd
+	function convert_req(req){
+		var new_req = req.substr(0,12);
+		new_req    += req.substr(12 + 6*6, 6);
+		new_req    += req.substr(12 + 6*4, 6);
+		new_req    += req.substr(12 + 6*2, 6);
+		new_req    += req.substr(12 + 6*0, 6);
+		new_req    += req.substr(12 + 6*1, 6);
+		new_req    += req.substr(12 + 6*3, 6);
+		new_req    += req.substr(12 + 6*5, 6);
+		new_req    += req.substr(12 + 6*7, 6);
+
+		new_req    += req.substr(12 + 6*8, 6);
+		new_req    += req.substr(12 + 6*10, 6);
+		new_req    += req.substr(12 + 6*12, 6);
+		new_req    += req.substr(12 + 6*14, 6);
+		new_req    += req.substr(12 + 6*15, 6);
+		new_req    += req.substr(12 + 6*13, 6);
+		new_req    += req.substr(12 + 6*11, 6);
+		new_req    += req.substr(12 + 6*9, 6);
+
+		return new_req;
+	}
+
+	function send(num){
+		if(num == null) num = 0;
+		seq = getSequence (num);
+		if(seq == null) return null;
+
+		req = "add:"+program+":"+seq;
+		req = convert_req(req);
+		$.post("http://[aaaa::ff:fe00:1]/leds",
+		req, 
+		function(data) {
+			console.log("seq"+num+":" + req);
+			send(++num);
+		});
+
+
+	}
+
+	function add(parent_id, num){
+		if(num == null) num = 1;
+
+		var div = document.createElement('p');
+		div.className = 'sequence';
+		document.getElementById(parent_id).appendChild(div);
+
+		for(var j=0;j < num; j++){
+			// Add speed value first
+			var input = document.createElement('INPUT');
+			input.value = 1000;
+			input.id=id++;
+			input.onchange = save;
+			pickers.push(input.id);
+			div.appendChild(input);
+			div.appendChild(document.createElement('br'));
+			div.appendChild(document.createElement('br'));
+
+
+			// Add led sequence
+			for (var i=0; i < 16; i++){
+				var input = document.createElement('INPUT');
+				var picker = new jscolor(input);
+				picker.id  = "led"+i;
+				picker.fromString("000000");
+				picker.onFineChange = save;
+				pickers.push(picker);
+
+				div.appendChild(input);
+				if (i%2) div.appendChild(document.createElement('br'));
+			}
+		}
+	}
+
+	function del(parent_id, num){
+		if(num == null) num = 1;
+		for(var j=0;j < num; j++){
+			element = document.getElementById(parent_id);
+			element.removeChild(element.lastChild);
+			for (var i=0; i < 17; i++)
+				pickers.pop();
+			}
+		save();
+	}
+
+	function save(){
+		cookie = {
+			'name': program,
+			'sequences': getSequences()
+		};
+		$.cookie('dvs'+program, JSON.stringify(cookie));
+	}
+
+
+	function load(){
+		try {
+		// Clean
+		pickers = new Array();
+		myNode = document.getElementById("sequences");
+		while (myNode.firstChild) myNode.removeChild(myNode.firstChild);
+
+		// Add sequences
+		cookie = $.cookie('dvs'+program);
+		if (!cookie) return;
+		name 	  = JSON.parse(cookie.toString()).name;
+		sequences = JSON.parse(cookie.toString()).sequences;
+		k = 0;
+		for (var i=0; i < sequences.length; i+=6){ // Read each RRGGBB 
+			if(pickers.length == k) add('sequences');
+
+			var seq = sequences.substr(i, 6);
+			if(i % 17 == 0) // If speed input
+				document.getElementById(pickers[k++]).value = seq;
+
+			else pickers[k++].fromString(seq);
+
+			}
+		}
+		catch(err) {
+			console.log('Unable to load the cookie: '+'dvs'+program+'\n' +err);
+		}
+	}
+
+   var program = '0';
+   var id = 0;
+   var pickers = new Array();
+
+   </script>
+
+<style>
+.sequence{
+float:left;
+border-color:white;
+border-width:1px;
+border-style:solid;
+}
+
+.sequence input {
+width:55px;
+}
+
+.buttons{
+position: fixed;
+top:400px;
+border-width:1px;
+border-style:solid;
+}
+
+.buttons input  {
+width:100px;
+height:40px;
+}
+
+button {
+}
+</style>
+
+
+</head>
+<body onload="load();">
+<p id="sequences"></p>
+<p class="buttons">
+	Program name:<select onchange="program=this.value;load();" style="width:206px;height:25px;" id="name">
+	  <option value="0">0</option>
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	</select><br><br>
+	Sequences: <input type="button" value="ADD" style="margin-left:23px;" onclick="add('sequences'); save();">
+	<input type="button" value="DEL" onclick="del('sequences');"><br><br>
+	Devil Stick:<input type="button" style="margin-left:22px;" value="clear" onclick="format();">
+	<input type="button" value="send" onclick="send();">
+</p>
+</body>
+</html>
+
+
+
+
