@@ -15,7 +15,6 @@ Contiki OS has a software architecture which facilitates the encapsulation of dr
 Hence each component of DVS software is independent which facilitates implementation, modularity and code re-use.
 Thanks to the shell over the serial line, it is possible to test the drivers of RGB leds and accelerometers, to manage the Webserver (start/stop) and the file system formating such as presented in following video.
 
-[![ScreenShot](http://duhart-clement.fr/imgs/dvs.png)](https://youtu.be/-myyth4NgPw)
 
 ## Shell Interface
 Open the serial line over USB interface: 
