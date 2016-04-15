@@ -95,5 +95,5 @@ More detail and Eagle files in (/hardware).
 ![alt tag](http://duhart-clement.fr/imgs/dvs-pcb.png)
 
 ## Results
-![alt tag](http://duhart-clement.fr/imgs/dvs-img1.png)
-![alt tag](http://duhart-clement.fr/imgs/dvs-img2.png)
+![alt tag](http://duhart-clement.fr/imgs/dvs-img1.jpg)
+![alt tag](http://duhart-clement.fr/imgs/dvs-img2.jpg)
