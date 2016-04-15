@@ -86,6 +86,14 @@ add:0:001000000000000000000000ff0000ff0000000000000000000000000000000000000000ff
 
 
 # Hardware
-![alt tag](http://duhart-clement.fr/imgs/dvs-web.png)
-![alt tag](http://duhart-clement.fr/imgs/dvs-web.png)
-![alt tag](http://duhart-clement.fr/imgs/dvs-web.png)
+
+The master boards is composed of AVR Atmega128rfa1 with IEEE 802.15.4 radio transceiver, an accelerometer MPU6050 an an FTDI chipset for USB serial line. The external connectors provides pins to control Neopixel leds (16 in default child boards) and power stage of 4 AAAA batteries with their charger circuit based on LM317.
+More detail and Eagle files in (/hardware).
+
+## Scheme and PCB of Master Board
+![alt tag](http://duhart-clement.fr/imgs/dvs-scheme.png)
+![alt tag](http://duhart-clement.fr/imgs/dvs-pcb.png)
+
+## Results
+![alt tag](http://duhart-clement.fr/imgs/dvs-img1.png)
+![alt tag](http://duhart-clement.fr/imgs/dvs-img2.png)
