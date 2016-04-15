@@ -18,7 +18,7 @@ Thanks to the shell over the serial line, it is possible to test the drivers of 
 [![ScreenShot](http://duhart-clement.fr/imgs/dvs.png)](https://youtu.be/-myyth4NgPw)
 
 ## Shell Interface
-Open the serial line over USB interface:
+Open the serial line over USB interface: 
 ```
 minicom -D /dev/ttyUSB0 -b 19200
 ```
@@ -36,7 +36,7 @@ killall
 
 ```
 ## Programming
-The software is fully implemented in C language and cross-platforms (MSP, AVR, ARM, X86, PIC, etc). The compilation must be executed in main project folder.
+The software is implemented in C language and cross-platforms (MSP, AVR, ARM, X86, PIC, etc). The compilation must be executed in main project folder.
 ```
 cd contiki-2.6/examples/dvs_main/
 ```
