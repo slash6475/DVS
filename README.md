@@ -10,6 +10,8 @@ In addition, the accelerometer and wireless communication can be used to control
 The wireless communication based on 6LoWPAN and HTTP can be operated by any other DVS platforms or computers.
 Based on these features, a lot of scenarios and applications can be imagined. 
 
+![alt tag](http://duhart-clement.fr/imgs/dvs.jpg)
+
 # Software
 Contiki OS has a software architecture which facilitates the encapsulation of drivers and applications into independent containers.
 Hence each component of DVS software is independent which facilitates implementation, modularity and code re-use.
